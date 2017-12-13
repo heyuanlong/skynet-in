@@ -50,3 +50,6 @@ curl '127.0.0.1:6600/testweb2?data=%7b"msgid":100,"msg":"mmmmmmmmmmm"%7d'
 
 例子13
 ./skynet config/testserver13_config		测试webclient
+
+例子1
+./skynet config/testserver14_config		测试使用skynet.queue 模块
