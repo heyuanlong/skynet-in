@@ -47,7 +47,8 @@ update3rd :
 CSERVICE = snlua logger gate harbor
 LUA_CLIB = skynet \
   client \
-  bson md5 sproto lpeg
+  bson md5 sproto lpeg \
+  client_socket codec xxtea webclient
 
 LUA_CLIB_SKYNET = \
   lua-skynet.c lua-seri.c \
@@ -109,6 +110,20 @@ $(LUA_CLIB_PATH)/sproto.so : lualib-src/sproto/sproto.c lualib-src/sproto/lsprot
 
 $(LUA_CLIB_PATH)/lpeg.so : 3rd/lpeg/lpcap.c 3rd/lpeg/lpcode.c 3rd/lpeg/lpprint.c 3rd/lpeg/lptree.c 3rd/lpeg/lpvm.c | $(LUA_CLIB_PATH)
 	$(CC) $(CFLAGS) $(SHARED) -I3rd/lpeg $^ -o $@ 
+	
+#--add by heyuanlong
+$(LUA_CLIB_PATH)/client_socket.so : lualib-src/lua-clientsocket.c | $(LUA_CLIB_PATH)
+	$(CC) $(CFLAGS) $(SHARED) $^ -o $@ -lpthread
+	
+$(LUA_CLIB_PATH)/codec.so : lualib-src/lua-codec.c | $(LUA_CLIB_PATH)
+	$(CC) $(CFLAGS) $(SHARED)  -lcrypto -Iskynet-src $^ -o $@	
+	
+$(LUA_CLIB_PATH)/xxtea.so : lualib-src/xxtea/xxtea.c lualib-src/xxtea/lua_xxtea.c | $(LUA_CLIB_PATH)
+	$(CC) $(CFLAGS) $(SHARED) -Ilualib-src/xxtea $^ -o $@
+	
+$(LUA_CLIB_PATH)/webclient.so : lualib-src/webclient.c | $(LUA_CLIB_PATH)
+	$(CC) $(CFLAGS) $(SHARED) -std=c99 -lcurl -Iskynet-src $^ -o $@
+#--add by heyuanlong
 
 clean :
 	rm -f $(SKYNET_BUILD_PATH)/skynet $(CSERVICE_PATH)/*.so $(LUA_CLIB_PATH)/*.so
