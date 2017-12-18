@@ -56,6 +56,9 @@ curl '127.0.0.1:6600/testweb2?data=%7b"msgid":100,"msg":"mmmmmmmmmmm"%7d'
 
 例子15
 ./skynet config/testserver15_s1_config		测试使用master/slave 模块
-./skynet config/testserver15_s2_config
+./skynet config/testserver15_s2_config		
 ./skynet config/testserver15_s3_config
+(以 . 开头的名字是在同一 skynet 节点下有效的，跨节点的 skynet 服务对别的节点下的 . 开头的名字不可见。不同的 skynet 节点可以定义相同的 . 开头的名字。
+如果一个 slave 意外退出网络，这个 harbor id 就被废弃，不可再使用。)
+
 
