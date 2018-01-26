@@ -8,6 +8,7 @@ local cs2 	= queue()  -- cs 是一个执行队列
 
 local function func1()
   logger.common.error("func1")
+  return "xxxxxxxxxxxxxxx"
 end
 local function func2(arg1,arg2)
 	arg1 = arg1 or "nil"
@@ -17,10 +18,10 @@ end
 
 skynet.start(function()
 
-	cs(func1)
+	logger.common.error(cs(func1))
 	cs(func2,1,2)
 	
-	cs2(func1)
+	logger.common.error(cs(func1))
 	cs2(func2,1,2)
 	
     skynet.exit()
